@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 
 public abstract class Animal : MonoBehaviour
@@ -12,6 +13,12 @@ public abstract class Animal : MonoBehaviour
 
     private string m_name;
 
+    private int m_ProjectedHealth;
+    private int m_Health;
+
+    public TextMeshProUGUI ProjectedHealthText;
+    public TextMeshProUGUI HealthText;
+    
 
 
     public string Sound
@@ -39,17 +46,52 @@ public abstract class Animal : MonoBehaviour
         }
 
     }
+
+
+    public int Health
+    {
+        get{return m_Health;}
+        set{m_Health = value;}
+
+
+    }
+
+   public int ProjectedHealth
+    {
+        get{return m_ProjectedHealth - 1;}
+        set{m_ProjectedHealth = value + 1;}
+
+
+    }
     // Start is called before the first frame update
     void Start()
     {
       Talk();  
+      UpdateHealthText();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            TakeDamage();
+            UpdateHealthText();
+        }
     }
 
-    
+    //ABSTRACTION 
+    //Animals can have their own TakeDamage
+    public virtual void TakeDamage()
+    {
+
+    }
+
+    private void UpdateHealthText()
+    {
+        ProjectedHealthText.text = "Projected health " + ProjectedHealth.ToString();
+        HealthText.text = "Non-projected health " + Health.ToString();
+
+
+    }
 }

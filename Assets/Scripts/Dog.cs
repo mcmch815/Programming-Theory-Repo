@@ -10,6 +10,8 @@ public class Dog : Animal
     {
         this.Name = "Dog";
         this.Sound = "Woof!";
+        this.ProjectedHealth = 80;
+        this.Health = 100;
     }
 
 
